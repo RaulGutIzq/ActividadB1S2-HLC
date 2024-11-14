@@ -1,0 +1,76 @@
+<!-- Raúl Gutiérrez Izquierdo - Actividad 2
+    Entrada simple de datos con prompt, control de flujo con condicionales y bucles
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="init-scale-1.0" />
+    <title>Venta de entradas</title>
+  </head>
+  <body>
+    <script>
+      //Tipo de entrada
+      const tipoEntradas = ["general", "vip", "infantil"];
+
+      let entradaUser, numEntradas, costo;
+
+      do {
+        entradaUser = parsearEntrada();
+      } while (!tipoEntradas.includes(entradaUser)); //Si la entrada en minusculas no esta en los tipos de entrada, no será una entrada válida
+
+      do {
+        numEntradas = parsearNumEntradas();
+      } while (numEntradas <= 0);
+
+      switch (entradaUser) {
+        case tipoEntradas[0]:
+          costo = 50;
+          break;
+        case tipoEntradas[1]:
+          costo = 100;
+          break;
+        case tipoEntradas[2]:
+          costo = 25;
+          break;
+      }
+      costo = costo * numEntradas;
+
+      if (
+        window.confirm(
+          `El costo total es de ${costo}, ¿Desea confirmar la compra?`
+        )
+      ) {
+        //Se imprimen las entradas por consola
+        for (let i = 1; i <= numEntradas; i++) {
+          console.log(`Entrada ${i} impresa`);
+        }
+        //Se avisa al usuario que se ha terminado de imprimir
+        window.alert("¡¡¡Compra realizada con éxito!!!");
+      } else {
+        window.alert("Compra cancelada");
+      }
+
+      function parsearEntrada() {
+        let entrada = window.prompt(
+          "¿Qué entrada desea comprar? General/VIP/Infantil"
+        );
+        //Si no hay entrada o le da a cancelar devolveremos cadena vacia.
+        if (entrada == null) {
+          entrada = "";
+        }
+        return entrada.toLowerCase();
+      }
+      function parsearNumEntradas() {
+        let entrada, entradaFloat, entradaInt;
+        do {
+          //Si la entrada no es un número o es un número con decimales no será válida
+          entrada = window.prompt("¿Cuántas entradas desea comprar?");
+          entradaInt = parseInt(entrada, 10);
+          entradaFloat = parseFloat(entrada, 10);
+        } while (isNaN(entradaInt) && entradaInt != entradaFloat);
+        return entradaInt;
+      }
+    </script>
+  </body>
+</html>
